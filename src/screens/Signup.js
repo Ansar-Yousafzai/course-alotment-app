@@ -100,7 +100,9 @@ const Signup = ({ navigation }) => {
             </Text>
             <TextInput
               style={input}
-              placeholder="Enter your Arid no"
+              placeholder={
+                isTeacherLogin ? "Enter your Teacher Id" : "Enter your Arid no"
+              }
               onChangeText={(text) => setAridno({ aridno: text })}
             />
           </View>
