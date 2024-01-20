@@ -16,14 +16,12 @@ import {
 
 const Login = ({ navigation }) => {
   const [isTeacherLogin, setIsTeacherLogin] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  useEffect;
+  const [email, setEmail] = useState("tahirkhattak456@gmail.com");
+  const [password, setPassword] = useState("qwerty");
+
   const handleLogin = () => {
-    setEmail("tahirkhattak456@gmail.com");
-    setPassword("qwerty");
     if (email === "tahirkhattak456@gmail.com" && password === "qwerty") {
-      navigation.navigate("homepage");
+      navigation.navigate("main");
     } else {
       alert("invalid");
     }
