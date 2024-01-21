@@ -16,14 +16,17 @@ import {
 
 const Login = ({ navigation }) => {
   const [isTeacherLogin, setIsTeacherLogin] = useState(false);
-  const [email, setEmail] = useState("tahirkhattak456@gmail.com");
-  const [password, setPassword] = useState("qwerty");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    if (email === "tahirkhattak456@gmail.com" && password === "qwerty") {
+    if (
+      email.toLocaleLowerCase() === "tahirkhattak456@gmail.com" &&
+      password === "qwerty"
+    ) {
       navigation.navigate("main");
     } else {
-      alert("invalid");
+      alert("email: ", email);
     }
   };
 
@@ -42,7 +45,7 @@ const Login = ({ navigation }) => {
             <TextInput
               style={input}
               placeholder="Enter your email"
-              onChangeText={(text) => setEmail({ email: text })}
+              onChangeText={(text) => setEmail(text)}
             />
           </View>
           <View style={formgroup}>
@@ -51,7 +54,7 @@ const Login = ({ navigation }) => {
               style={input}
               placeholder="Enter your password"
               secureTextEntry={true}
-              onChangeText={(text) => setPassword({ password: text })}
+              onChangeText={(text) => setPassword(text)}
             />
           </View>
           <View style={styles.fp}>
