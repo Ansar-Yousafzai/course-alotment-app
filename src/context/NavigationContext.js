@@ -11,7 +11,7 @@ export const useNavigation = () => {
 };
 
 export const NavigationProvider = ({ children }) => {
-  const [currentPage, setCurrentPage] = useState("home");
+  const [currentPage, setCurrentPage] = useState("timetable");
 
   const navigateTo = (page) => {
     setCurrentPage(page);

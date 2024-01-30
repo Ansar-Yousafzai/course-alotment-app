@@ -51,6 +51,32 @@ export function BottomNav({ navigation }) {
 
           <Pressable
             cursor="pointer"
+            opacity={currentPage === "timetable" ? 1 : 0.5}
+            py="2"
+            flex={1}
+            onPress={() => navigateTo("timetable")}
+          >
+            <Center>
+              <Icon
+                mb="1"
+                as={
+                  <MaterialCommunityIcons
+                    name={
+                      currentPage === "timetable" ? "timetable" : "timetable"
+                    }
+                  />
+                }
+                color="white"
+                size="sm"
+              />
+              <Text color="white" fontSize="12">
+                Timetable
+              </Text>
+            </Center>
+          </Pressable>
+
+          <Pressable
+            cursor="pointer"
             opacity={currentPage === "profile" ? 1 : 0.5}
             py="2"
             flex={1}
