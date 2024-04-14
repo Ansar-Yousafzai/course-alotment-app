@@ -6,6 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import main from "./src/screens/main";
 import Verification from "./src/screens/Verification";
+// import { Feedback } from "./src/layouts/feedback.layout";
 
 const Stack = createNativeStackNavigator();
 
@@ -50,6 +51,11 @@ export default function App() {
             headerShown: false,
           }}
         />
+
+        {/* <Stack.Screen name="feedback" component={Feedback} /> */}
+        
+
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

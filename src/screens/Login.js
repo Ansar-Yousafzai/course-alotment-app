@@ -1,33 +1,40 @@
-import { StyleSheet, Text, View, Image, TextInput } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from "react-native";
 import logo from "../../assets/images/mainlogo.png";
+import axios from "axios";
 import { button1 } from "../common/button";
-import {
-  errormessage,
-  formgroup,
-  head1,
-  head2,
-  input,
-  label,
-  link,
-  link2,
-  link3,
-} from "../common/formcss";
+import { label, input, formgroup } from "../common/formcss";
 
-const Login = ({ navigation }) => {
-  const [isTeacherLogin, setIsTeacherLogin] = useState(false);
+const Login = ({ navigation, route }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [role, setRole] = useState("");
+
+  useEffect(() => {
+    if (route.params && route.params.role) {
+      setRole(route.params.role);
+    }
+  }, [route.params]);
 
   const handleLogin = () => {
-    if (
-      email.toLocaleLowerCase() === "tahirkhattak456@gmail.com" &&
-      password === "qwerty"
-    ) {
+    // Perform login authentication
+    axios.post('http://localhost:3306/login', {
+      email: email,
+      password: password,
+      role: role
+    })
+    .then(response => {
+      // If login successful, navigate to main screen
       navigation.navigate("main");
-    } else {
-      alert("email: ", email);
-    }
+    })
+    .catch(error => {
+      // If login fails, display error message
+      alert("Invalid credentials");
+    });
+  };
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -37,8 +44,8 @@ const Login = ({ navigation }) => {
           <Image style={styles.logo} source={logo} />
         </View>
         <View style={styles.s2}>
-          <Text style={head1}>Login</Text>
-          <Text style={head2}>Sign in to continue</Text>
+          <Text style={styles.head1}>Login</Text>
+          <Text style={styles.head2}>Sign in to continue</Text>
 
           <View style={formgroup}>
             <Text style={label}>Email</Text>
@@ -55,28 +62,27 @@ const Login = ({ navigation }) => {
               placeholder="Enter your password"
               secureTextEntry={true}
               onChangeText={(text) => setPassword(text)}
+              InputProps={{
+                endAdornment: (
+                  <IconButton onClick={handleShowPassword}>
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                ),
+              }}
             />
           </View>
           <View style={styles.fp}>
-            <Text style={link}>Forgot Password?</Text>
+            <Text style={styles.link}>Forgot Password?</Text>
           </View>
-          <Text style={button1} onPress={() => handleLogin()}>
-            Login {isTeacherLogin && "(Teacher)"}
-          </Text>
-          <Text style={link2}>
-            Don't have an account?&nbsp;
-            <Text style={link} onPress={() => navigation.navigate("signup")}>
-              Create a new account
-            </Text>
+
+          <Text style={button1} onPress={handleLogin}>
+            Login 
           </Text>
 
-          <Text style={link3}>
-            or Login as a&nbsp;
-            <Text
-              style={link}
-              onPress={() => setIsTeacherLogin((prev) => !prev)}
-            >
-              {isTeacherLogin ? "Student" : "Teacher"}
+          <Text>
+            Don't have an account?&nbsp;
+            <Text style={styles.link} onPress={() => navigation.navigate("signup")}>
+              Create a new account
             </Text>
           </Text>
         </View>
@@ -85,8 +91,6 @@ const Login = ({ navigation }) => {
   );
 };
 
-export default Login;
-
 const styles = StyleSheet.create({
   container: {
     width: "100%",
@@ -94,7 +98,6 @@ const styles = StyleSheet.create({
     display: "flex",
     backgroundColor: "#1B1C1E",
   },
-
   container1: {
     display: "flex",
     justifyContent: "center",
@@ -108,7 +111,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "40%",
   },
-
   s2: {
     display: "flex",
     backgroundColor: "#fff",
@@ -117,6 +119,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     padding: 20,
+    alignItems: "center"
   },
   formgroup: {
     display: "flex",
@@ -135,14 +138,27 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
   },
-  fp: {
-    display: "flex",
-    alignItems: "flex-end",
-    marginHorizontal: 10,
-    marginVertical: 5,
-  },
   logo: {
     height: 300,
     width: 400,
   },
+  head1: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  head2: {
+    fontSize: 16,
+    color: "#777",
+    marginBottom: 20,
+  },
+  link:{
+    color: "red",
+  },
+  fp:{
+    marginLeft:180,
+    margin:10,
+  }
 });
+
+export default Login;

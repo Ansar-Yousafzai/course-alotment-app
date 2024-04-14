@@ -11,6 +11,7 @@ const Main = ({ navigation }) => {
         <LayoutController />
         <BottomNav navigation={navigation} />
       </View>
+      
     </NavigationProvider>
   );
 };

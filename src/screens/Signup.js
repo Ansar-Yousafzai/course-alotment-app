@@ -2,26 +2,15 @@ import {
   StyleSheet,
   Text,
   View,
-  Alert,
   TextInput,
-  ScrollView,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import axios from "axios";
-
 import { button1 } from "../common/button";
-
-import {
-  formgroup,
-  head1,
-  input,
-  input1,
-  label,
-  link,
-  link4,
-  text,
-} from "../common/formcss";
+import { formgroup, label, input } from "../common/formcss";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';  // Import Icon
 
 const Signup = ({ navigation }) => {
   const [name, setUsername] = useState("");
@@ -31,105 +20,92 @@ const Signup = ({ navigation }) => {
   const [cnic, setCnic] = useState("");
   const [aridno, setAridno] = useState("");
   const [address, setAddress] = useState("");
-
   const [isTeacherLogin, setIsTeacherLogin] = useState(false);
+  const [passwordError, setPasswordError] = useState("");
+  const [passwordVisibility, setPasswordVisibility] = useState(true);
+  const [cpasswordVisibility, setCpasswordVisibility] = useState(true);
+
+  const handleSignup = () => {
+    if (password !== cpassword) {
+      setPasswordError("Passwords do not match!");
+      Alert.alert("Error", "Passwords do not match. Please try again.");
+      return;
+    }
+    setPasswordError("");
+    axios.post("http://localhost:3306/signup", {
+      name,
+      email,
+      password,
+      cnic,
+      aridno,
+      address,
+      role: isTeacherLogin ? "teacher" : "student",
+    }).then(response => {
+      navigation.navigate("Login");
+    }).catch(error => {
+      Alert.alert("Error", "Failed to create account. Please try again.");
+    });
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.container1}>
-        <View style={styles.s1}></View>
-        <ScrollView style={styles.s2}>
-          <Text style={head1}>Create a New Account</Text>
-          <Text style={text}>
+        <View style={styles.s2}>
+          <Text style={styles.head1}>Create a New Account</Text>
+          <Text style={styles.text}>
             Create account as&nbsp;
-            <Text
-              style={link}
-              onPress={() => setIsTeacherLogin((prev) => !prev)}
-            >
+            <Text style={styles.link} onPress={() => setIsTeacherLogin(prev => !prev)}>
               {isTeacherLogin ? "Student" : "Teacher"}
             </Text>
           </Text>
-
           <View style={formgroup}>
-            <Text style={label}>Name</Text>
-            <TextInput
-              style={input}
-              placeholder="Enter your Name"
-              onChangeText={(text) => setUsername({ name: text })}
-            />
+            <Text style={label}>FullName</Text>
+            <TextInput style={input} placeholder="Enter your FullName" onChangeText={setUsername} />
           </View>
           <View style={formgroup}>
             <Text style={label}>Email</Text>
-            <TextInput
-              style={input}
-              placeholder="Enter your Email"
-              onChangeText={(text) => setEmail({ email: text })}
-            />
+            <TextInput style={input} placeholder="Enter your Email" onChangeText={setEmail} />
           </View>
-
           <View style={formgroup}>
             <Text style={label}>Password</Text>
-            <TextInput
-              style={input}
-              placeholder="Enter your Password"
-              secureTextEntry={true}
-              onChangeText={(text) => setPassword({ password: text })}
-            />
+            <View style={styles.inputWithIcon}>
+              <TextInput
+                style={[input, {flex: 1}]}
+                placeholder="Enter your Password"
+                secureTextEntry={passwordVisibility}
+                onChangeText={setPassword}
+              />
+              <Icon
+                name={passwordVisibility ? 'eye-off' : 'eye'}
+                size={24}
+                color="grey"
+                onPress={() => setPasswordVisibility(!passwordVisibility)}
+              />
+            </View>
           </View>
-
           <View style={formgroup}>
             <Text style={label}>Confirm Password</Text>
-            <TextInput
-              style={input}
-              placeholder="Confirm your Password"
-              secureTextEntry={true}
-              onChangeText={(text) => setCpassword({ cpassword: text })}
-            />
+            <View style={styles.inputWithIcon}>
+              <TextInput
+                style={[input, {flex: 1}]}
+                placeholder="Confirm your Password"
+                secureTextEntry={cpasswordVisibility}
+                onChangeText={setCpassword}
+              />
+              <Icon
+                name={cpasswordVisibility ? 'eye-off' : 'eye'}
+                size={24}
+                color="grey"
+                onPress={() => setCpasswordVisibility(!cpasswordVisibility)}
+              />
+            </View>
+            {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
           </View>
-          <View style={formgroup}>
-            <Text style={label}>CNIC No</Text>
-            <TextInput
-              style={input}
-              placeholder="Enter your cnic"
-              onChangeText={(text) => setCnic({ cnic: text })}
-            />
-          </View>
-          <View style={formgroup}>
-            <Text style={label}>
-              {isTeacherLogin ? "Teacher Id" : "Arid no"}
-            </Text>
-            <TextInput
-              style={input}
-              placeholder={
-                isTeacherLogin ? "Enter your Teacher Id" : "Enter your Arid no"
-              }
-              onChangeText={(text) => setAridno({ aridno: text })}
-            />
-          </View>
-          <View style={formgroup}>
-            <Text style={label}>Address</Text>
-            <TextInput
-              style={input1}
-              placeholder="Enter your Address"
-              onChangeText={(text) => setAddress({ address: text })}
-            />
-          </View>
-
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("login");
-            }}
-          >
-            <Text style={button1}>Signup {isTeacherLogin && "(Teacher)"}</Text>
+          {/* Other fields */}
+          <TouchableOpacity onPress={handleSignup}>
+            <Text style={button1}>Signup {isTeacherLogin ? "(Teacher)" : ""}</Text>
           </TouchableOpacity>
-
-          <Text style={link4}>
-            Already Registered?&nbsp;
-            <Text style={link} onPress={() => navigation.navigate("login")}>
-              Login here
-            </Text>
-          </Text>
-        </ScrollView>
+        </View>
       </View>
     </View>
   );
@@ -138,12 +114,15 @@ const Signup = ({ navigation }) => {
 export default Signup;
 
 const styles = StyleSheet.create({
+  // Existing styles...
+ 
   container: {
     width: "100%",
     height: "100%",
     display: "flex",
     backgroundColor: "#1B1C1E",
   },
+
   container1: {
     display: "flex",
     justifyContent: "center",
@@ -199,5 +178,36 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     marginHorizontal: 10,
     marginVertical: 5,
+  },
+  head1: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  text: {
+    fontSize: 16,
+    color: "#777",
+    marginBottom: 20,
+  },
+  link: {
+    color: "red",
+  },
+  link4: {
+    marginTop: 20,
+    textAlign: "center",
+  },
+  inputWithIcon: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FFB0CC',
+    borderRadius: 20,
+    paddingRight: 12,
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 14,
+    marginTop: 5,
+    marginLeft: 10,
+    marginRight: 10,
   },
 });

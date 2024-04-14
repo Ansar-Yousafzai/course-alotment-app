@@ -1,5 +1,9 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
+import Icon from 'react-native-vector-icons/FontAwesome';
+import SVGWave from '../component/SVGWave';
+
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -9,10 +13,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     paddingHorizontal: 10,
-    marginTop: 90,
+    marginTop: 120,
+  },
+  container1:{
+    alignItems: "center",
+    marginTop: 150,
   },
   card: {
-    width: 100,
+    width: 200,
     height: 100,
     margin: 10,
     backgroundColor: "green",
@@ -31,18 +39,37 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "white",
   },
+  svgCurve: {
+    position: 'absolute',
+    width: width,
+  },
 });
 
-export const Home = () => {
-  const digits = ["class1", "class2", "class3", "class4", "class5", "class6"];
+export const Home = ({ navigation }) => {
+  const digits = [
+    { label: "Teachers", icon: "graduation-cap", screen: "TeachersScreen" },
+    { label: "Courses", icon: "book", screen: "CoursesScreen" },
+    { label: "Contact Us", icon: "contact", screen: "ContactScreen" },
+    { label: "Settings", icon: "cog", screen: "SettingsScreen" }
+  ];
 
   return (
     <View style={styles.container}>
-      {digits.map((digit) => (
-        <View key={digit} style={styles.card}>
-          <Text style={styles.cardText}>{digit}</Text>
-        </View>
-      ))}
+      <SVGWave customStyles={styles.svgCurve} />
+      <View style={styles.container1}>
+        {digits.map(({ label, icon, screen }) => (
+          <TouchableOpacity
+            key={label}
+            style={styles.card}
+            onPress={() => navigation.navigate(screen)}
+          >
+            <Icon name={icon} size={30} color="white" />
+            <Text style={styles.cardText}>{label}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
     </View>
   );
 };
+
+export default Home;
