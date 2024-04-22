@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from "react-native";
 import logo from "../../assets/images/mainlogo.png";
 import axios from "axios";
@@ -24,14 +24,14 @@ const Login = ({ navigation, route }) => {
       password: password,
       role: role
     })
-    .then(response => {
-      // If login successful, navigate to main screen
-      navigation.navigate("main");
-    })
-    .catch(error => {
-      // If login fails, display error message
-      alert("Invalid credentials");
-    });
+      .then(response => {
+        // If login successful, navigate to main screen
+        navigation.navigate("main");
+      })
+      .catch(error => {
+        // If login fails, display error message
+        alert("Invalid credentials");
+      });
   };
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -62,29 +62,29 @@ const Login = ({ navigation, route }) => {
               placeholder="Enter your password"
               secureTextEntry={true}
               onChangeText={(text) => setPassword(text)}
-              InputProps={{
-                endAdornment: (
-                  <IconButton onClick={handleShowPassword}>
-                    {showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                ),
-              }}
+            // InputProps={{
+            //   endAdornment: (
+            //     <IconButton onClick={handleShowPassword}>
+            //       {showPassword ? <Visibility /> : <VisibilityOff />}
+            //     </IconButton>
+            //   ),
+            // }}
             />
           </View>
-          <View style={styles.fp}>
+          {/* <View style={styles.fp}>
             <Text style={styles.link}>Forgot Password?</Text>
-          </View>
+          </View> */}
 
           <Text style={button1} onPress={handleLogin}>
-            Login 
+            Login
           </Text>
 
-          <Text>
+          {/* <Text>
             Don't have an account?&nbsp;
             <Text style={styles.link} onPress={() => navigation.navigate("signup")}>
               Create a new account
             </Text>
-          </Text>
+          </Text> */}
         </View>
       </View>
     </View>
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: "40%",
+    height: "60%",
   },
   s2: {
     display: "flex",
@@ -152,12 +152,12 @@ const styles = StyleSheet.create({
     color: "#777",
     marginBottom: 20,
   },
-  link:{
+  link: {
     color: "red",
   },
-  fp:{
-    marginLeft:180,
-    margin:10,
+  fp: {
+    marginLeft: 180,
+    margin: 10,
   }
 });
 

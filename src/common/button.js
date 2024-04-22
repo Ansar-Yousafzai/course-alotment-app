@@ -8,5 +8,6 @@ module.exports = {
     minWidth: 150,
     textAlign: "center",
     margin: 10,
+    marginTop: 25,
   },
 };

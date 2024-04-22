@@ -17,7 +17,7 @@ const TeachersScreen = () => {
     return (
         <ScrollView>
             {teachers.map(teacher => (
-                <Card key={teacher.id} style={{margin: 10}}>
+                <Card key={teacher.id} style={{ margin: 10 }}>
                     <Card.Content>
                         <Title>{teacher.name}</Title>
                         <Paragraph>{teacher.bio}</Paragraph>
