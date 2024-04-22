@@ -1,3 +1,5 @@
+const { shadow } = require("react-native-paper");
+
 module.exports = {
   button1: {
     backgroundColor: "#1a8739",
@@ -9,5 +11,10 @@ module.exports = {
     textAlign: "center",
     margin: 10,
     marginTop: 25,
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOpacity: 0.8,
+    elevation: 6,
+    shadowRadius: 15 ,
+    shadowOffset : { width: 1, height: 13},
   },
 };

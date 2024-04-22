@@ -3,7 +3,7 @@ import { View, Text, Switch, StyleSheet, Image } from 'react-native';
 
 const SettingsScreen = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [userName, setUserName] = useState('John Doe');
+  const [userName, setUserName] = useState();
   // const [profilePicture, setProfilePicture] = useState(require('./default-profile-pic.png'));
 
   const toggleDarkMode = () => {

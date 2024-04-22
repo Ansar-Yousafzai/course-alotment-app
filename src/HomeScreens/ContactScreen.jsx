@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import {button1}from '../common/button';
 
 const ContactUs = () => {
   const [name, setName] = useState('');
@@ -56,7 +57,10 @@ const ContactUs = () => {
         multiline
         numberOfLines={4}
       />
-      <Button title="Send Message" onPress={handleSendMessage} />
+      {/* <Button style={button1}  title="Send Message" onPress={handleSendMessage} /> */}
+      <Text style={button1} onPress={handleSendMessage}>
+            Send Message
+          </Text>
     </View>
   );
 };
@@ -100,6 +104,7 @@ const styles = StyleSheet.create({
   messageInput: {
     height: 100,
   },
+  
 });
 
 export default ContactUs;

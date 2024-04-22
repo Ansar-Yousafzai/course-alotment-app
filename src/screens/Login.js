@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from "react-native";
 import logo from "../../assets/images/mainlogo.png";
 import axios from "axios";
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { button1 } from "../common/button";
 import { label, input, formgroup } from "../common/formcss";
 
@@ -9,6 +10,9 @@ const Login = ({ navigation, route }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const toggleShowPassword = () => { 
+    setShowPassword(!showPassword); 
+}; 
   const [role, setRole] = useState("");
 
   useEffect(() => {
@@ -53,6 +57,7 @@ const Login = ({ navigation, route }) => {
               style={input}
               placeholder="Enter your email"
               onChangeText={(text) => setEmail(text)}
+              required
             />
           </View>
           <View style={formgroup}>
@@ -62,14 +67,16 @@ const Login = ({ navigation, route }) => {
               placeholder="Enter your password"
               secureTextEntry={true}
               onChangeText={(text) => setPassword(text)}
-            // InputProps={{
-            //   endAdornment: (
-            //     <IconButton onClick={handleShowPassword}>
-            //       {showPassword ? <Visibility /> : <VisibilityOff />}
-            //     </IconButton>
-            //   ),
-            // }}
-            />
+              required
+          />
+           <MaterialCommunityIcons 
+                    name={showPassword ? 'eye' : 'eye-off'} 
+                    size={24} 
+                    color="#aaa"
+                    style={styles.icon} 
+                    onPress={toggleShowPassword} 
+                /> 
+                
           </View>
           {/* <View style={styles.fp}>
             <Text style={styles.link}>Forgot Password?</Text>
@@ -150,8 +157,9 @@ const styles = StyleSheet.create({
   head2: {
     fontSize: 16,
     color: "#777",
-    marginBottom: 20,
+    marginBottom: 10,
   },
+
   // link: {
   //   color: "red",
   // },
