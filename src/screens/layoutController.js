@@ -2,10 +2,10 @@ import { StyleSheet, View, Text } from "react-native";
 import { Home } from "../layouts/home.layout";
 import { Profile } from "../layouts/profile.layout";
 import { Timetable } from "../layouts/timetable.layout";
-import { TeachersScreen } from "../layouts/TeachersScreen";
-import { CoursesScreen } from "../layouts/CoursesScreen";
+import { TeachersScreen } from "../HomeScreens/TeachersScreen";
+import { CoursesScreen } from "../HomeScreens/CoursesScreen";
 import { ContactScreen } from "../HomeScreens/ContactScreen";
-import { SettingsScreen } from "../layouts/SettingsScreen";
+import { SettingsScreen } from "../HomeScreens/SettingsScreen";
 // import { Feedback } from "../layouts/feedback.layout";
 import { useNavigation } from "../context/NavigationContext";
 
@@ -22,8 +22,6 @@ export const LayoutController = () => {
       {currentPage === "contact" && <ContactScreen />}
       {currentPage === "settings" && <SettingsScreen />}
       {/* {currentPage === "feedback" && <Feedback />} */}
-
-      
     </View>
   );
 };
