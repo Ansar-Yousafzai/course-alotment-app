@@ -22,8 +22,6 @@ export const LayoutController = () => {
       {currentPage === "contact" && <ContactScreen />}
       {currentPage === "settings" && <SettingsScreen />}
       {/* {currentPage === "feedback" && <Feedback />} */}
-
-      
     </View>
   );
 };
