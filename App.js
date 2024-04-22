@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import Login from "./src/screens/Login";
-import Signup from "./src/screens/Signup";
+// import Signup from "./src/screens/Signup";
 import Welcome from "./src/screens/Welcome";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -28,13 +28,13 @@ export default function App() {
             headerShown: false,
           }}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="signup"
           component={Signup}
           options={{
             headerShown: false,
           }}
-        />
+        /> */}
 
         <Stack.Screen
           name="main"

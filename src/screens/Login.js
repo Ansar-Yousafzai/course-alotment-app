@@ -152,13 +152,13 @@ const styles = StyleSheet.create({
     color: "#777",
     marginBottom: 20,
   },
-  link: {
-    color: "red",
-  },
-  fp: {
-    marginLeft: 180,
-    margin: 10,
-  }
+  // link: {
+  //   color: "red",
+  // },
+  // fp: {
+  //   marginLeft: 180,
+  //   margin: 10,
+  // }
 });
 
 export default Login;
